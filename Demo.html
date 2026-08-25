@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AURELIA — Premium Restaurant Demo</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg:#090909;
+  --card:#141414;
+  --card2:#1a1815;
+  --gold:#d7ad63;
+  --gold2:#f0d493;
+  --white:#f7f4ed;
+  --muted:#a19d95;
+  --line:rgba(255,255,255,.09);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:Inter,Arial,sans-serif;
+  overflow-x:hidden;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+/* ---------- NAV ---------- */
+
+.navbar{
+  position:fixed;
+  z-index:1000;
+  top:0;
+  left:0;
+  width:100%;
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 6%;
+  background:rgba(8,8,8,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+
+.logo{
+  font-family:"Cormorant Garamond",serif;
+  font-size:30px;
+  letter-spacing:5px;
+  color:var(--gold2);
+}
+
+.logo small{
+  display:block;
+  font-family:Inter,sans-serif;
+  font-size:7px;
+  letter-spacing:4px;
+  color:#aaa;
+  text-align:center;
+  margin-top:-5px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:28px;
+  list-style:none;
+}
+
+.nav-links a{
+  font-size:12px;
+  color:#c7c2b9;
+  transition:.25s;
+}
+
+.nav-links a:hover{
+  color:var(--gold2);
+}
+
+.nav-book{
+  border:1px solid var(--gold);
+  padding:11px 18px;
+  color:var(--gold2)!important;
+}
+
+.menu-btn{
+  display:none;
+  border:0;
+  background:none;
+  color:var(--gold2);
+  font-size:28px;
+  cursor:pointer;
+}
+
+/* ---------- HERO ---------- */
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:130px 7% 80px;
+
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.55),rgba(0,0,0,.2)),
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2200&q=90")
+    center/cover;
+}
+
+.hero-content{
+  max-width:720px;
+}
+
+.kicker{
+  color:var(--gold);
+  letter-spacing:5px;
+  font-size:10px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(60px,9vw,115px);
+  line-height:.83;
+  font-weight:500;
+}
+
+.hero h1 span{
+  color:var(--gold2);
+}
+
+.hero p{
+  color:#c1bdb5;
+  line-height:1.9;
+  max-width:600px;
+  margin-top:28px;
+  font-size:14px;
+}
+
+.buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:32px;
+}
+
+.btn{
+  border:0;
+  cursor:pointer;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  padding:14px 24px;
+  font-size:11px;
+  font-weight:600;
+  border-radius:2px;
+  transition:.25s;
+}
+
+.btn-gold{
+  background:var(--gold);
+  color:#111;
+}
+
+.btn-gold:hover{
+  background:var(--gold2);
+  transform:translateY(-2px);
+}
+
+.btn-outline{
+  background:transparent;
+  color:#eee;
+  border:1px solid #777;
+}
+
+.btn-outline:hover{
+  border-color:var(--gold);
+  color:var(--gold2);
+}
+
+.hero-stats{
+  display:flex;
+  gap:40px;
+  margin-top:55px;
+}
+
+.stat strong{
+  display:block;
+  color:var(--gold);
+  font-family:"Cormorant Garamond",serif;
+  font-size:30px;
+}
+
+.stat span{
+  font-size:8px;
+  letter-spacing:2px;
+  color:#777;
+}
+
+/* ---------- COMMON ---------- */
+
+section{
+  padding:100px 7%;
+}
+
+.center{
+  text-align:center;
+}
+
+.eyebrow{
+  color:var(--gold);
+  font-size:9px;
+  letter-spacing:4px;
+  margin-bottom:14px;
+}
+
+.title{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(45px,6vw,72px);
+  line-height:.95;
+  font-weight:500;
+}
+
+.subtext{
+  max-width:650px;
+  margin:20px auto 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+/* ---------- ABOUT ---------- */
+
+.about{
+  background:#0d0c0b;
+}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  align-items:center;
+}
+
+.about-img{
+  width:100%;
+  height:570px;
+  object-fit:cover;
+  border-radius:3px;
+}
+
+.about-text p{
+  color:#9c9890;
+  line-height:1.9;
+  font-size:13px;
+  margin-top:20px;
+}
+
+.about-points{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:35px;
+}
+
+.point{
+  border-top:1px solid var(--line);
+  padding-top:16px;
+}
+
+.point b{
+  color:var(--gold);
+  font-family:"Cormorant Garamond",serif;
+  font-size:22px;
+}
+
+.point p{
+  margin-top:5px;
+  font-size:10px;
+}
+
+/* ---------- MENU ---------- */
+
+.menu-section{
+  background:#090909;
+}
+
+.filters{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:45px 0 35px;
+}
+
+.filter{
+  background:transparent;
+  color:#888;
+  border:1px solid #333;
+  padding:10px 18px;
+  cursor:pointer;
+  font-size:10px;
+  transition:.25s;
+}
+
+.filter.active,
+.filter:hover{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#111;
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.food{
+  background:var(--card);
+  border:1px solid #292724;
+  overflow:hidden;
+  transition:.3s;
+}
+
+.food:hover{
+  transform:translateY(-5px);
+  border-color:var(--gold);
+}
+
+.food.hide{
+  display:none;
+}
+
+.food-img{
+  height:230px;
+  position:relative;
+  overflow:hidden;
+}
+
+.food-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.5s;
+}
+
+.food:hover .food-img img{
+  transform:scale(1.06);
+}
+
+.badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:#000c;
+  color:var(--gold2);
+  padding:6px 9px;
+  font-size:8px;
+  letter-spacing:1px;
+}
+
+.food-body{
+  padding:20px;
+}
+
+.food-head{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.food-name{
+  font-family:"Cormorant Garamond",serif;
+  font-size:25px;
+}
+
+.price{
+  color:var(--gold);
+  white-space:nowrap;
+}
+
+.food-body p{
+  color:#777;
+  line-height:1.7;
+  font-size:11px;
+  margin-top:8px;
+}
+
+.order-btn{
+  width:100%;
+  margin-top:16px;
+  padding:10px;
+  background:transparent;
+  color:var(--gold);
+  border:1px solid #51452f;
+  cursor:pointer;
+  font-size:10px;
+}
+
+.order-btn:hover{
+  background:var(--gold);
+  color:#111;
+}
+
+.more{
+  margin-top:35px;
+  text-align:center;
+}
+
+/* ---------- BANNER ---------- */
+
+.banner{
+  min-height:470px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+
+  background:
+    linear-gradient(#0009,#000b),
+    url("https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=2200&q=90")
+    center/cover fixed;
+}
+
+.banner h2{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(52px,7vw,90px);
+  font-weight:500;
+}
+
+/* ---------- GALLERY ---------- */
+
+.gallery{
+  background:#0d0c0b;
+}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-auto-rows:190px;
+  gap:10px;
+  margin-top:45px;
+}
+
+.gallery-item{
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.gallery-item.big{
+  grid-column:span 2;
+  grid-row:span 2;
+}
+
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.5s;
+}
+
+.gallery-item:hover img{
+  transform:scale(1.08);
+}
+
+/* ---------- REVIEWS ---------- */
+
+.reviews{
+  background:#090909;
+}
+
+.review-wrap{
+  max-width:850px;
+  margin:45px auto 0;
+  position:relative;
+}
+
+.review{
+  display:none;
+  text-align:center;
+  padding:40px 20px;
+}
+
+.review.active{
+  display:block;
+}
+
+.stars{
+  color:var(--gold);
+  letter-spacing:4px;
+}
+
+.review p{
+  color:#bbb6ad;
+  font-family:"Cormorant Garamond",serif;
+  font-size:27px;
+  line-height:1.5;
+  margin:20px 0;
+}
+
+.review small{
+  color:#666;
+  letter-spacing:2px;
+}
+
+.slider-buttons{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+.slider-buttons button{
+  width:38px;
+  height:38px;
+  background:transparent;
+  color:var(--gold);
+  border:1px solid #555;
+  cursor:pointer;
+}
+
+/* ---------- CONTACT ---------- */
+
+.contact{
+  background:#0d0c0b;
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:20px;
+  margin-top:45px;
+}
+
+.contact-card{
+  background:#151412;
+  border:1px solid #292724;
+  padding:35px;
+}
+
+.contact-row{
+  display:flex;
+  gap:15px;
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.contact-icon{
+  color:var(--gold);
+  font-size:22px;
+}
+
+.contact-row h3{
+  font-family:"Cormorant Garamond",serif;
+  font-size:22px;
+}
+
+.contact-row p{
+  color:#777;
+  font-size:11px;
+  line-height:1.7;
+  margin-top:4px;
+}
+
+.map{
+  min-height:460px;
+}
+
+.map iframe{
+  width:100%;
+  height:100%;
+  min-height:460px;
+  border:0;
+}
+
+/* ---------- RESERVATION ---------- */
+
+.reservation{
+  background:
+    linear-gradient(#000a,#000c),
+    url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2200&q=90")
+    center/cover;
+}
+
+.form{
+  max-width:850px;
+  margin:40px auto 0;
+  background:#111;
+  padding:30px;
+  border:1px solid #292724;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+.field label{
+  color:#888;
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  background:#191816;
+  color:#eee;
+  border:1px solid #333;
+  padding:13px;
+  outline:none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--gold);
+}
+
+.field textarea{
+  resize:vertical;
+  min-height:90px;
+}
+
+.form .btn{
+  margin-top:20px;
+}
+
+/* ---------- FOOTER ---------- */
+
+footer{
+  background:#050505;
+  padding:60px 7% 25px;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr 1fr;
+  gap:35px;
+  padding-bottom:40px;
+  border-bottom:1px solid #222;
+}
+
+.footer-title{
+  color:var(--gold);
+  font-size:9px;
+  letter-spacing:2px;
+  margin-bottom:15px;
+}
+
+.footer-links{
+  list-style:none;
+}
+
+.footer-links li{
+  color:#666;
+  font-size:11px;
+  margin:10px 0;
+}
+
+.footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  padding-top:22px;
+  color:#444;
+  font-size:9px;
+}
+
+/* ---------- FLOATING WHATSAPP ---------- */
+
+.whatsapp{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:900;
+  width:58px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#25d366;
+  color:white;
+  font-size:26px;
+  box-shadow:0 8px 30px #25d36655;
+  transition:.25s;
+}
+
+.whatsapp:hover{
+  transform:scale(1.1);
+}
+
+/* ---------- MODAL ---------- */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  background:#000b;
+  backdrop-filter:blur(8px);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:600px;
+  max-height:90vh;
+  overflow:auto;
+  background:#151412;
+  border:1px solid var(--gold);
+  padding:30px;
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:18px;
+  top:12px;
+  background:none;
+  border:0;
+  color:#aaa;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.modal-title{
+  font-family:"Cormorant Garamond",serif;
+  font-size:45px;
+  margin-bottom:20px;
+}
+
+.modal-list{
+  display:grid;
+  gap:13px;
+}
+
+.modal-item{
+  display:flex;
+  justify-content:space-between;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--line);
+}
+
+.modal-item span:last-child{
+  color:var(--gold);
+}
+
+/* ---------- IMAGE MODAL ---------- */
+
+.image-modal img{
+  max-width:95vw;
+  max-height:85vh;
+  object-fit:contain;
+}
+
+/* ---------- TOAST ---------- */
+
+.toast{
+  position:fixed;
+  z-index:5000;
+  left:50%;
+  bottom:30px;
+  transform:translate(-50%,120px);
+  background:#1b1916;
+  border:1px solid var(--gold);
+  color:#eee;
+  padding:13px 20px;
+  font-size:11px;
+  transition:.3s;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:900px){
+
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:76px;
+    left:0;
+    width:100%;
+    background:#090909;
+    flex-direction:column;
+    align-items:stretch;
+    padding:20px 6%;
+    gap:0;
+  }
+
+  .nav-links.open{
+    display:flex;
+  }
+
+  .nav-links li{
+    border-bottom:1px solid var(--line);
+  }
+
+  .nav-links a{
+    display:block;
+    padding:15px 0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .about-grid,
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .menu-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:600px){
+
+  .navbar{
+    height:70px;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+
+  .hero{
+    padding:120px 6% 70px;
+  }
+
+  .hero h1{
+    font-size:60px;
+  }
+
+  .hero-stats{
+    display:none;
+  }
+
+  section{
+    padding:75px 5%;
+  }
+
+  .about-img{
+    height:420px;
+  }
+
+  .about-points{
+    grid-template-columns:1fr;
+  }
+
+  .menu-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gallery-grid{
+    grid-template-columns:1fr 1fr;
+    grid-auto-rows:130px;
+  }
+
+  .gallery-item.big{
+    grid-column:span 2;
+    grid-row:span 2;
+  }
+
+  .review p{
+    font-size:22px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .footer-bottom{
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .buttons .btn{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+  <a href="#home" class="logo">
+    AURELIA
+    <small>FINE DINING</small>
+  </a>
+
+  <nav>
+    <ul class="nav-links" id="navLinks">
+
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+
+      <li>
+        <a href="#reservation" class="nav-book">
+          Reserve Table
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+
+  <button class="menu-btn" id="menuBtn">☰</button>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+  <div class="hero-content">
+
+    <div class="kicker">
+      FINE DINING • SIGNATURE FLAVOURS
+    </div>
+
+    <h1>
+      Taste<br>
+      <span>Worth Remembering.</span>
+    </h1>
+
+    <p>
+      An elegant dining experience where exceptional
+      flavours, beautiful ambience and warm hospitality
+      come together.
+    </p>
+
+    <div class="buttons">
+
+      <a href="#menu" class="btn btn-gold">
+        🍽 Explore Menu
+      </a>
+
+      <a href="#reservation" class="btn btn-outline">
+        Reserve a Table
+      </a>
+
+    </div>
+
+    <div class="hero-stats">
+
+      <div class="stat">
+        <strong>4.9★</strong>
+        <span>GUEST RATING</span>
+      </div>
+
+      <div class="stat">
+        <strong>15+</strong>
+        <span>SIGNATURE DISHES</span>
+      </div>
+
+      <div class="stat">
+        <strong>11 AM</strong>
+        <span>OPEN DAILY</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+
+  <div class="about-grid">
+
+    <div>
+
+      <img
+        class="about-img"
+        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=90"
+        alt="Restaurant interior"
+        onerror="this.src='https://picsum.photos/1200/800?random=30'"
+      >
+
+    </div>
+
+    <div class="about-text">
+
+      <div class="eyebrow">OUR STORY</div>
+
+      <h2 class="title">
+        More Than<br>
+        Just A Meal.
+      </h2>
+
+      <p>
+        We believe dining should be an experience.
+        Every plate is prepared with carefully selected
+        ingredients and served with genuine hospitality.
+      </p>
+
+      <p>
+        From intimate dinners to family celebrations,
+        every visit is designed to become a memory.
+      </p>
+
+      <div class="about-points">
+
+        <div class="point">
+          <b>Fresh Ingredients</b>
+          <p>Selected with care every day.</p>
+        </div>
+
+        <div class="point">
+          <b>Expert Chefs</b>
+          <p>Crafted with experience.</p>
+        </div>
+
+        <div class="point">
+          <b>Elegant Ambience</b>
+          <p>Designed for special moments.</p>
+        </div>
+
+        <div class="point">
+          <b>Warm Service</b>
+          <p>Hospitality from the heart.</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MENU -->
+
+<section class="menu-section" id="menu">
+
+  <div class="center">
+
+    <div class="eyebrow">OUR MENU</div>
+
+    <h2 class="title">
+      Crafted For Your Table.
+    </h2>
+
+    <p class="subtext">
+      Explore our carefully selected dishes.
+      Tap a category to filter the menu.
+    </p>
+
+  </div>
+
+
+  <div class="filters">
+
+    <button class="filter active" data-filter="all">
+      All
+    </button>
+
+    <button class="filter" data-filter="starter">
+      Starters
+    </button>
+
+    <button class="filter" data-filter="main">
+      Main Course
+    </button>
+
+    <button class="filter" data-filter="biryani">
+      Biryani
+    </button>
+
+    <button class="filter" data-filter="dessert">
+      Desserts
+    </button>
+
+  </div>
+
+
+  <div class="menu-grid">
+
+
+    <!-- 1 -->
+
+    <article class="food" data-category="starter">
+
+      <div class="food-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=90"
+          alt="Kebab"
+          onerror="this.src='https://picsum.photos/900/600?random=1'"
+        >
+
+        <span class="badge">POPULAR</span>
+
+      </div>
+
+      <div class="food-body">
+
+        <div class="food-head">
+
+          <h3 class="food-name">
+            Royal Kebab
+          </h3>
+
+          <span class="price">₹279</span>
+
+        </div>
+
+        <p>
+          Charcoal grilled kebabs with herbs and
+          signature spices.
+        </p>
+
+        <button
+          class="order-btn"
+          data-item="Royal Kebab - ₹279">
+          Order on WhatsApp
+        </button>
+
+      </div>
+
+    </article>
+
+
+    <!-- 2 -->
+
+    <article class="food" data-category="starter">
+
+      <div class="food-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=1000&q=90"
+          alt="Starter"
+          onerror="this.src='https://picsum.photos/900/600?random=2'"
+        >
+
+      </div>
+
+      <div class="food-body">
+
+        <div class="food-head">
+
+          <h3 class="food-name">
+            Crispy Bites
+          </h3>
+
+          <span class="price">₹229</span>
+
+        </div>
+
+        <p>
+          Golden crispy bites served with
+          house-made dip.
+        </p>
+
+        <button
+          class="order-btn"
+          data-item="Crispy Bites - ₹229">
+          Order on WhatsApp
+        </button>
+
+      </div>
+
+    </article>
+
+
+    <!-- 3 -->
+
+    <article class="food" data-category="main">
+
+      <div class="food-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=1000&q=90"
+          alt="Butter chicken"
+          onerror="this.src='https://picsum.photos/900/600?random=3'"
+        >
+
+      </div>
+
+      <div class="food-body">
+
+        <div class="food-head">
+
+          <h3 class="food-name">
+            Butter Chicken
+          </h3>
+
+          <span class="price">₹329</span>
+
+        </div>
+
+        <p>
+          Creamy tomato gravy with tender
+          grilled chicken.
+        </p>
+
+        <button
+          class="order-btn"
+          data-item="Butter Chicken - ₹329">
+          Order on WhatsApp
+        </button>
+
+      </div>
+
+    </article>
+
+
+    <!-- 4 -->
+
+    <article class="food" data-category="main">
+
+      <div class="food-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=90"
+          alt="Curry"
+          onerror="this.src='https://picsum.photos/900/600?random=4'"
+        >
+
+      </div>
+
+      <div class="food-body">
+
+        <div class="food-head">
+
+          <h3 class="food-name">
+            Royal Curry
+          </h3>
+
+          <span class="price">₹349</span>
+
+        </div>
+
+        <p>
+          Slow-cooked curry with a
